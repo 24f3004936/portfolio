@@ -1,0 +1,34 @@
+name: Combined CI (Email + Cache)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---- Requirement from Task 6 ----
+      - name: 24f3004936@ds.study.iitm.ac.in
+        run: echo "Hello from combined workflow"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ---- Caching Requirement ----
+      - name: Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-9f9d896
+
+      - name: prime-cache-9f9d896
+        run: echo "Cache hit? -> ${{ steps.cache-deps.outputs.cache-hit }}"
